@@ -13,6 +13,7 @@
 
 <style>
 :root {
+  color-scheme: light;
   --bg: #f5f4f0;
   --white: #fff;
   --ink: #171916;
@@ -20,6 +21,31 @@
   --accent: #d6f36a;
   --line: #e4e3dc;
   --dark: #20241e;
+  --header-bg: rgba(245,244,240,.9);
+  --hero-bg: #dfe4d2;
+  --hero-watermark: #cbd4b9;
+  --visual-tag-bg: #fff;
+  --product-bg: #e8e8e1;
+  --product-hover: #dfe5d3;
+  --input-bg: #fff;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #151713;
+  --white: #20231e;
+  --ink: #f0f0e9;
+  --muted: #a0a397;
+  --accent: #d6f36a;
+  --line: #34382f;
+  --dark: #10120f;
+  --header-bg: rgba(21,23,19,.92);
+  --hero-bg: #30382a;
+  --hero-watermark: #3e4935;
+  --visual-tag-bg: #252920;
+  --product-bg: #252820;
+  --product-hover: #30382a;
+  --input-bg: #20231e;
 }
 
 * {
@@ -28,28 +54,18 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: "DM Sans", sans-serif;
+  transition: background .3s, color .3s;
 }
 
-button, input {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
 
 .container {
   width: min(1240px, calc(100% - 64px));
@@ -63,19 +79,20 @@ header {
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--line);
-  background: rgba(245,244,240,.9);
+  background: var(--header-bg);
   backdrop-filter: blur(16px);
   position: sticky;
   top: 0;
   z-index: 20;
   animation: slideDown .7s ease both;
+  transition: background .3s, border-color .3s;
 }
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 25px;
+  gap: 20px;
 }
 
 .logo {
@@ -84,9 +101,7 @@ header {
   letter-spacing: -2px;
 }
 
-.logo span {
-  color: #7b9235;
-}
+.logo span { color: #7b9235; }
 
 .nav-links {
   display: flex;
@@ -96,27 +111,47 @@ header {
   font-weight: 600;
 }
 
-.nav-links a {
-  transition: color .2s;
+.nav-links a { transition: color .2s; }
+.nav-links a:hover { color: var(--ink); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.nav-links a:hover {
+.theme-button {
+  border: 1px solid var(--line);
+  background: transparent;
   color: var(--ink);
+  border-radius: 50px;
+  padding: 11px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: .25s;
+}
+
+.theme-button:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
 }
 
 .cart-button {
   border: none;
   background: var(--ink);
-  color: white;
+  color: var(--bg);
   border-radius: 50px;
   padding: 12px 19px;
   font-size: 12px;
   font-weight: 700;
   transition: .25s;
+  white-space: nowrap;
 }
 
 .cart-button:hover {
   background: #53652b;
+  color: white;
   transform: translateY(-2px);
 }
 
@@ -130,9 +165,7 @@ header {
   align-items: center;
 }
 
-.hero-content {
-  animation: fadeUp .8s .1s ease both;
-}
+.hero-content { animation: fadeUp .8s .1s ease both; }
 
 .label {
   display: inline-flex;
@@ -160,9 +193,7 @@ header {
   font-weight: 800;
 }
 
-.hero h1 span {
-  color: #879d4d;
-}
+.hero h1 span { color: #879d4d; }
 
 .hero-description {
   color: var(--muted);
@@ -183,7 +214,7 @@ header {
   align-items: center;
   gap: 22px;
   background: var(--ink);
-  color: white;
+  color: var(--bg);
   border: none;
   padding: 17px 23px;
   border-radius: 7px;
@@ -194,6 +225,7 @@ header {
 
 .primary-button:hover {
   background: #52652b;
+  color: white;
   transform: translateY(-4px);
   box-shadow: 0 12px 25px #17191620;
 }
@@ -209,7 +241,7 @@ header {
 
 .hero-visual {
   height: 480px;
-  background: #dfe4d2;
+  background: var(--hero-bg);
   border-radius: 12px;
   position: relative;
   overflow: hidden;
@@ -217,6 +249,7 @@ header {
   align-items: center;
   justify-content: center;
   animation: visualIn 1s .2s ease both;
+  transition: background .3s;
 }
 
 .hero-visual:before {
@@ -225,7 +258,7 @@ header {
   font-size: clamp(70px, 12vw, 150px);
   font-weight: 800;
   letter-spacing: -10px;
-  color: #cbd4b9;
+  color: var(--hero-watermark);
 }
 
 .hero-product {
@@ -269,7 +302,8 @@ header {
   position: absolute;
   bottom: 22px;
   right: 22px;
-  background: white;
+  background: var(--visual-tag-bg);
+  color: var(--ink);
   border-radius: 50px;
   padding: 10px 16px;
   font-size: 10px;
@@ -282,6 +316,7 @@ header {
 .marquee {
   overflow: hidden;
   background: var(--accent);
+  color: #171916;
   padding: 16px 0;
 }
 
@@ -300,9 +335,7 @@ header {
 
 /* SECTION */
 
-.section {
-  padding: 100px 0;
-}
+.section { padding: 100px 0; }
 
 .section-top {
   display: flex;
@@ -349,7 +382,7 @@ header {
 .filter.active {
   background: var(--ink);
   border-color: var(--ink);
-  color: white;
+  color: var(--bg);
 }
 
 /* PRODUCTS */
@@ -368,7 +401,7 @@ header {
 .product-image {
   height: 330px;
   border-radius: 9px;
-  background: #e8e8e1;
+  background: var(--product-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,7 +411,7 @@ header {
 }
 
 .product:hover .product-image {
-  background: #dfe5d3;
+  background: var(--product-hover);
 }
 
 .product-shape {
@@ -447,6 +480,7 @@ header {
   top: 15px;
   left: 15px;
   background: var(--accent);
+  color: #171916;
   padding: 7px 11px;
   border-radius: 50px;
   font-size: 9px;
@@ -483,6 +517,7 @@ header {
   width: 100%;
   padding: 12px;
   background: transparent;
+  color: var(--ink);
   border: 1px solid var(--line);
   border-radius: 6px;
   font-size: 11px;
@@ -492,7 +527,7 @@ header {
 
 .add-button:hover {
   background: var(--ink);
-  color: white;
+  color: var(--bg);
   border-color: var(--ink);
 }
 
@@ -528,9 +563,7 @@ header {
   letter-spacing: -3px;
 }
 
-.about-banner h2 span {
-  color: var(--accent);
-}
+.about-banner h2 span { color: var(--accent); }
 
 .about-banner p {
   color: #aeb3a8;
@@ -570,19 +603,21 @@ header {
   min-width: 0;
   padding: 15px;
   border: 1px solid var(--line);
-  background: white;
+  background: var(--input-bg);
+  color: var(--ink);
   border-radius: 6px;
   outline: none;
+  transition: background .3s, color .3s, border-color .3s;
 }
 
-.newsletter-form input:focus {
-  border-color: #84994d;
-}
+.newsletter-form input::placeholder { color: var(--muted); }
+
+.newsletter-form input:focus { border-color: #84994d; }
 
 .newsletter-form button {
   border: none;
   background: var(--ink);
-  color: white;
+  color: var(--bg);
   padding: 0 20px;
   border-radius: 6px;
   font-size: 11px;
@@ -658,17 +693,16 @@ footer {
   height: 100%;
   width: min(420px, 100%);
   background: var(--bg);
+  color: var(--ink);
   z-index: 51;
   padding: 28px;
   transform: translateX(100%);
-  transition: transform .35s ease;
+  transition: transform .35s ease, background .3s, color .3s;
   display: flex;
   flex-direction: column;
 }
 
-.cart-panel.open {
-  transform: translateX(0);
-}
+.cart-panel.open { transform: translateX(0); }
 
 .cart-head {
   display: flex;
@@ -678,13 +712,12 @@ footer {
   border-bottom: 1px solid var(--line);
 }
 
-.cart-head h2 {
-  font-size: 23px;
-}
+.cart-head h2 { font-size: 23px; }
 
 .close-cart {
   background: none;
   border: none;
+  color: var(--ink);
   font-size: 26px;
 }
 
@@ -706,7 +739,7 @@ footer {
 .cart-row button {
   border: none;
   background: none;
-  color: #8a513c;
+  color: #c17c60;
   font-size: 11px;
 }
 
@@ -772,35 +805,39 @@ footer {
     padding-top: 65px;
   }
 
-  .hero-visual {
-    height: 390px;
-  }
+  .hero-visual { height: 390px; }
 
-  .products {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .products { grid-template-columns: repeat(2, 1fr); }
 
   .about-banner {
     padding: 45px;
     grid-template-columns: 1fr;
   }
+
+  .nav-links { gap: 15px; }
 }
 
 @media(max-width: 600px) {
-  .container {
-    width: calc(100% - 32px);
+  .container { width: calc(100% - 32px); }
+
+  header { height: 70px; }
+
+  .logo { font-size: 22px; }
+
+  .nav-links { display: none; }
+
+  .nav { gap: 8px; }
+
+  .nav-actions { gap: 7px; }
+
+  .theme-button {
+    padding: 10px 11px;
+    font-size: 10px;
   }
 
-  header {
-    height: 70px;
-  }
-
-  .logo {
-    font-size: 22px;
-  }
-
-  .nav-links {
-    display: none;
+  .cart-button {
+    padding: 11px 13px;
+    font-size: 10px;
   }
 
   .hero {
@@ -813,75 +850,45 @@ footer {
     letter-spacing: -4px;
   }
 
-  .hero-visual {
-    height: 310px;
-  }
+  .hero-visual { height: 310px; }
 
-  .hero-product {
-    transform: scale(.8) rotate(-9deg);
-  }
+  .hero-product { transform: scale(.8) rotate(-9deg); }
 
-  .section {
-    padding: 70px 0;
-  }
+  .section { padding: 70px 0; }
 
-  .section-top {
-    display: block;
-  }
+  .section-top { display: block; }
 
-  .section-top p {
-    margin-top: 15px;
-  }
+  .section-top p { margin-top: 15px; }
 
-  .products {
-    gap: 20px 12px;
-  }
+  .products { gap: 20px 12px; }
 
-  .product-image {
-    height: 210px;
-  }
+  .product-image { height: 210px; }
 
-  .product-shape {
-    transform: scale(.75);
-  }
+  .product-shape { transform: scale(.75); }
 
   .product:hover .product-shape {
     transform: scale(.8) rotate(-5deg);
   }
 
-  .product-info {
-    display: block;
-  }
+  .product-info { display: block; }
 
   .product-price {
     display: block;
     margin-top: 8px;
   }
 
-  .about-banner {
-    padding: 32px 24px;
-  }
+  .about-banner { padding: 32px 24px; }
 
-  .newsletter {
-    padding: 75px 0;
-  }
+  .newsletter { padding: 75px 0; }
 
-  .newsletter-form {
-    flex-direction: column;
-  }
+  .newsletter-form { flex-direction: column; }
 
-  .newsletter-form button {
-    padding: 15px;
-  }
+  .newsletter-form button { padding: 15px; }
 
   .footer-main,
-  .footer-bottom {
-    flex-direction: column;
-  }
+  .footer-bottom { flex-direction: column; }
 
-  .footer-links {
-    flex-wrap: wrap;
-  }
+  .footer-links { flex-wrap: wrap; }
 }
 
 @media(prefers-reduced-motion: reduce) {
@@ -914,9 +921,19 @@ footer {
       <a href="#contacts">Контакты</a>
     </nav>
 
-    <button class="cart-button" id="openCart">
-      КОРЗИНА (<span id="cartCount">0</span>)
-    </button>
+    <div class="nav-actions">
+      <button
+        class="theme-button"
+        id="themeToggle"
+        type="button"
+        aria-label="Переключить тему"
+        aria-pressed="false"
+      >☾ ТЁМНАЯ</button>
+
+      <button class="cart-button" id="openCart">
+        КОРЗИНА (<span id="cartCount">0</span>)
+      </button>
+    </div>
   </div>
 </header>
 
@@ -1175,6 +1192,46 @@ footer {
 </aside>
 
 <script>
+// THEME SWITCHER
+
+const themeToggle = document.getElementById("themeToggle");
+const themeColor = document.querySelector('meta[name="theme-color"]');
+
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+
+  const isDark = theme === "dark";
+
+  themeToggle.textContent = isDark ? "☀ СВЕТЛАЯ" : "☾ ТЁМНАЯ";
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+
+  themeColor.setAttribute(
+    "content",
+    isDark ? "#151713" : "#f5f4f0"
+  );
+
+  try {
+    localStorage.setItem("north-theme", theme);
+  } catch (error) {
+    // Тема продолжит работать до закрытия страницы.
+  }
+}
+
+let savedTheme = "light";
+
+try {
+  savedTheme = localStorage.getItem("north-theme") || "light";
+} catch (error) {
+  savedTheme = "light";
+}
+
+setTheme(savedTheme === "dark" ? "dark" : "light");
+
+themeToggle.addEventListener("click", () => {
+  const currentTheme = document.documentElement.dataset.theme;
+  setTheme(currentTheme === "dark" ? "light" : "dark");
+});
+
 // PRODUCT FILTERS
 
 const filters = document.querySelectorAll(".filter");
@@ -1286,6 +1343,7 @@ function renderCart() {
 
     const remove = document.createElement("button");
     remove.textContent = "УДАЛИТЬ";
+
     remove.addEventListener("click", () => {
       cart = cart.filter(product => product.name !== item.name);
       renderCart();
